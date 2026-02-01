@@ -1,0 +1,56 @@
+[
+  {
+    "id": "peluche-ternura",
+    "name": "Peluche Ternura",
+    "sections": ["dia-dos-namorados"],
+    "image": "img/produtos/placeholder-produto.jpg",
+    "description": "Peluche personalizado com imagem/frase. Oferta que dá logo pontos.",
+    "active": true,
+    "whatsappText": "Olá! 👋 Vi no vosso site o Peluche Ternura (Dia dos Namorados) e queria saber opções e valores."
+  },
+  {
+    "id": "colares-iniciais",
+    "name": "Colares & Iniciais",
+    "sections": ["dia-dos-namorados"],
+    "image": "img/produtos/placeholder-produto.jpg",
+    "description": "Minimalista, elegante e personalizado. O tipo de presente que não falha.",
+    "active": true,
+    "whatsappText": "Olá! 👋 Tenho interesse em Colares & Iniciais (Dia dos Namorados). Podem dar orçamento e opções?"
+  },
+  {
+    "id": "caixa-amor",
+    "name": "Box Amor Personalizada",
+    "sections": ["dia-dos-namorados"],
+    "image": "img/produtos/placeholder-produto.jpg",
+    "description": "Uma caixa com detalhes personalizados: mensagem, foto, nome… tudo à tua medida.",
+    "active": true,
+    "whatsappText": "Olá! 👋 Vi a Box Amor Personalizada (Dia dos Namorados). Quero um orçamento com as opções."
+  },
+  {
+    "id": "tshirt-pai",
+    "name": "T-shirt do Pai (Personalizada)",
+    "sections": ["dia-do-pai"],
+    "image": "img/produtos/placeholder-produto.jpg",
+    "description": "Personalizamos com nomes, frases, desenhos dos miúdos… o pai não se escapa.",
+    "active": true,
+    "whatsappText": "Olá! 👋 Vi a T-shirt do Pai (Dia do Pai). Queria saber valores e como personalizar."
+  },
+  {
+    "id": "caneca-pai",
+    "name": "Caneca do Pai",
+    "sections": ["dia-do-pai"],
+    "image": "img/produtos/placeholder-produto.jpg",
+    "description": "Clássico com impacto: foto + frase + nome. E sim, fica mesmo bem feito.",
+    "active": true,
+    "whatsappText": "Olá! 👋 Tenho interesse na Caneca do Pai. Podem dar orçamento e opções de personalização?"
+  },
+  {
+    "id": "champion-light",
+    "name": "Champion Light",
+    "sections": ["dia-do-pai"],
+    "image": "img/produtos/placeholder-produto.jpg",
+    "description": "Uma peça única com caricatura e luz LED. Para pais/miúdos/clubes — é um espetáculo.",
+    "active": true,
+    "whatsappText": "Olá! 👋 Vi o Champion Light (Dia do Pai). Quero saber opções e valores, por favor."
+  }
+]
