@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="pt-PT">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Printastic_Al — Personalizados</title>
+  <meta name="description" content="Catálogo de personalizados Printastic_Al. Escolhe uma campanha e pede orçamento via WhatsApp." />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="container topbar-inner">
+      <div class="brand">
+        <div class="mark" aria-hidden="true"></div>
+        <div>
+          <div class="brand-name">PRINTASTIC_AL</div>
+          <div class="brand-tag">Se imaginas, criamos!</div>
+        </div>
+      </div>
+
+      <nav class="nav">
+        <a href="#campanhas">Campanhas</a>
+        <a href="#produtos">Ideias</a>
+        <a href="#como-funciona">Como funciona</a>
+        <a class="pill" href="admin/editor.html" title="Editor (para gerir campanhas e produtos)">Editor</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="container hero-grid">
+        <div class="hero-copy">
+          <h1>Personalizados únicos, feitos à tua medida.</h1>
+          <p>
+            Aqui não há “produtos genéricos”. Há ideias que adaptamos ao teu estilo — e fechamos tudo numa conversa rápida no WhatsApp.
+          </p>
+          <div class="hero-actions">
+            <a class="btn primary" href="#campanhas">Ver campanhas</a>
+            <a class="btn" id="btnWhatsAppGeral" href="#">Falar no WhatsApp</a>
+          </div>
+          <div class="micro">
+            <span class="dot"></span>
+            <span>Sem preços fixos: o orçamento depende de personalização, materiais e quantidades.</span>
+          </div>
+        </div>
+
+        <div class="hero-card">
+          <div class="hero-card-title">O que está ativo agora</div>
+          <div class="muted">Ativa/desativa campanhas e produtos no editor — sem mexer no layout.</div>
+          <div class="stats">
+            <div class="stat">
+              <div class="stat-big" id="statSections">—</div>
+              <div class="stat-small">Campanhas ativas</div>
+            </div>
+            <div class="stat">
+              <div class="stat-big" id="statProducts">—</div>
+              <div class="stat-small">Ideias ativas</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="campanhas" class="block">
+      <div class="container">
+        <div class="block-head">
+          <h2>Campanhas</h2>
+          <div class="muted">Escolhe o tema e vê ideias já organizadas.</div>
+        </div>
+        <div id="campaignGrid" class="campaign-grid"></div>
+      </div>
+    </section>
+
+    <section id="produtos" class="block alt">
+      <div class="container">
+        <div class="block-head row">
+          <div>
+            <h2>Ideias</h2>
+            <div class="muted">Escolhe uma campanha ou pesquisa pelo nome.</div>
+          </div>
+
+          <div class="controls">
+            <label class="sr-only" for="campaignFilter">Filtrar por campanha</label>
+            <select id="campaignFilter"></select>
+
+            <input id="search" type="search" placeholder="Pesquisar ideia…" />
+
+            <label class="toggle">
+              <input id="onlyActive" type="checkbox" checked />
+              <span>Só ativos</span>
+            </label>
+          </div>
+        </div>
+
+        <div id="chips" class="chips"></div>
+        <div id="productGrid" class="grid"></div>
+
+        <div id="empty" class="empty" hidden>
+          <div class="empty-title">Nada a mostrar com estes filtros.</div>
+          <div class="muted">Experimenta outra campanha ou limpa a pesquisa.</div>
+        </div>
+      </div>
+    </section>
+
+    <section id="como-funciona" class="block">
+      <div class="container">
+        <div class="block-head">
+          <h2>Como funciona</h2>
+          <div class="muted">Simples e sem complicações — como deve ser.</div>
+        </div>
+
+        <div class="steps">
+          <div class="step"><div class="n">1</div><div class="t">Escolhes uma ideia</div><div class="muted">Campanhas já organizadas por ocasião.</div></div>
+          <div class="step"><div class="n">2</div><div class="t">Pedes orçamento</div><div class="muted">WhatsApp abre com mensagem pré-feita.</div></div>
+          <div class="step"><div class="n">3</div><div class="t">Afinamos contigo</div><div class="muted">Texto, imagem, tamanhos, acabamentos.</div></div>
+          <div class="step"><div class="n">4</div><div class="t">Produção & entrega</div><div class="muted">Tu imaginas. Nós criamos. 😄</div></div>
+        </div>
+
+        <div class="cta">
+          <div>
+            <div class="cta-title">Tens uma ideia fora da caixa?</div>
+            <div class="muted">Explica-nos o que queres e nós damos opções (rápido).</div>
+          </div>
+          <a class="btn primary" id="btnWhatsAppCustom" href="#">Pedir algo à medida</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer-inner">
+      <div class="muted">© <span id="year"></span> Printastic_Al — Se imaginas, criamos!</div>
+      <div class="footlinks">
+        <a href="#campanhas">Campanhas</a>
+        <a href="#produtos">Ideias</a>
+        <a href="admin/editor.html">Editor</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    window.PRINTASTIC = { whatsappNumber: "351925670379" };
+  </script>
+  <script src="js/app.js"></script>
+</body>
+</html>
