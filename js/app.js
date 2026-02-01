@@ -3,19 +3,24 @@
 
   const WA = (window.PRINTASTIC && window.PRINTASTIC.whatsappNumber) || "351000000000";
 
-  const $ = (sel, root=document) => root.querySelector(sel);
+  const $ = (sel, root = document) => root.querySelector(sel);
   const el = (tag, cls) => {
     const n = document.createElement(tag);
     if (cls) n.className = cls;
     return n;
   };
 
-  function waLink(text){
+  function waLink(text) {
     const msg = encodeURIComponent(text);
     return `https://wa.me/${WA}?text=${msg}`;
   }
 
-  async function loadJson(path){
+  function applyWhatsAppTarget(a) {
+    a.target = "_blank";
+    a.rel = "noopener noreferrer";
+  }
+
+  async function loadJson(path) {
     const res = await fetch(path, { cache: "no-store" });
     if (!res.ok) throw new Error(`Falhou a carregar ${path}`);
     return res.json();
@@ -24,7 +29,6 @@
   let sections = [];
   let products = [];
 
-  // UI refs
   const campaignGrid = $("#campaignGrid");
   const campaignFilter = $("#campaignFilter");
   const chipsWrap = $("#chips");
@@ -36,10 +40,13 @@
   const statSections = $("#statSections");
   const statProducts = $("#statProducts");
 
-  function normalize(s){ return String(s||"").trim().toLowerCase(); }
+  function normalize(s) {
+    return String(s || "").trim().toLowerCase();
+  }
 
-  function buildChips(activeId){
+  function buildChips(activeId) {
     chipsWrap.innerHTML = "";
+
     const all = el("button", "chip");
     all.type = "button";
     all.textContent = "Todas";
@@ -57,8 +64,9 @@
     });
   }
 
-  function fillFilter(){
+  function fillFilter() {
     campaignFilter.innerHTML = "";
+
     const optAll = document.createElement("option");
     optAll.value = "";
     optAll.textContent = "Todas as campanhas";
@@ -72,9 +80,13 @@
     });
   }
 
-  function renderCampaigns(){
+  function renderCampaigns() {
     campaignGrid.innerHTML = "";
-    const active = sections.filter(s => s.active).sort((a,b) => (a.order||0) - (b.order||0));
+
+    const active = sections
+      .filter(s => s.active)
+      .sort((a, b) => (a.order || 0) - (b.order || 0));
+
     active.forEach(s => {
       const card = el("div", "campaign");
 
@@ -84,6 +96,7 @@
       card.appendChild(img);
 
       const body = el("div", "campaign-body");
+
       const title = el("div", "campaign-title");
       title.textContent = s.title;
 
@@ -91,20 +104,24 @@
       desc.textContent = s.description || "";
 
       const actions = el("div", "campaign-actions");
-      const btn1 = el("a", "btn primary");
-      btn1.href = "#produtos";
-      btn1.textContent = "Ver ideias";
-      btn1.addEventListener("click", () => {
+
+      const btnIdeas = el("a", "btn primary");
+      btnIdeas.href = "#produtos";
+      btnIdeas.textContent = "Ver ideias";
+      btnIdeas.addEventListener("click", () => {
         campaignFilter.value = s.id;
         buildChips(s.id);
         renderProducts();
       });
 
-      const btn2 = el("a", "btn");
-      btn2.href = waLink(`Olá! 👋 Vi a campanha "${s.title}" no vosso site e queria saber opções e valores.`);
-      btn2.textContent = "Pedir orçamento";
+      const btnWA = el("a", "btn");
+      btnWA.href = waLink(
+        `Olá! 👋 Vi a campanha "${s.title}" no vosso site e queria saber opções e valores.`
+      );
+      btnWA.textContent = "Pedir orçamento";
+      applyWhatsAppTarget(btnWA);
 
-      actions.append(btn1, btn2);
+      actions.append(btnIdeas, btnWA);
       body.append(title, desc, actions);
       card.appendChild(body);
 
@@ -112,27 +129,34 @@
     });
   }
 
-  function productMatches(p, campaignId, q){
+  function productMatches(p, campaignId, q) {
     const qn = normalize(q);
-    const inCampaign = !campaignId || (Array.isArray(p.sections) && p.sections.includes(campaignId));
-    const matchesText = !qn || normalize(p.name).includes(qn) || normalize(p.description).includes(qn);
+    const inCampaign =
+      !campaignId ||
+      (Array.isArray(p.sections) && p.sections.includes(campaignId));
+
+    const matchesText =
+      !qn ||
+      normalize(p.name).includes(qn) ||
+      normalize(p.description).includes(qn);
+
     return inCampaign && matchesText;
   }
 
-  function renderProducts(){
+  function renderProducts() {
     const campaignId = campaignFilter.value;
     const q = search.value || "";
     const only = !!onlyActive.checked;
 
-    const activeSections = new Set(sections.filter(s => s.active).map(s => s.id));
+    const activeSections = new Set(
+      sections.filter(s => s.active).map(s => s.id)
+    );
 
     const list = products
       .filter(p => {
         if (only && !p.active) return false;
-        // esconder produtos que só pertençam a campanhas inativas
         const secs = Array.isArray(p.sections) ? p.sections : [];
-        const hasAnyActiveSection = secs.some(id => activeSections.has(id));
-        return hasAnyActiveSection;
+        return secs.some(id => activeSections.has(id));
       })
       .filter(p => productMatches(p, campaignId, q));
 
@@ -141,6 +165,7 @@
 
     list.forEach(p => {
       const card = el("div", "card");
+
       const media = el("div", "card-media");
       const img = document.createElement("img");
       img.alt = p.name;
@@ -149,6 +174,7 @@
       media.appendChild(img);
 
       const body = el("div", "card-body");
+
       const title = el("h3", "card-title");
       title.textContent = p.name;
 
@@ -156,9 +182,12 @@
       desc.textContent = p.description || "";
 
       const btn = el("a", "btn primary");
-      const msg = p.whatsappText || `Olá! 👋 Vi no vosso site o produto "${p.name}" e queria saber opções e valores.`;
+      const msg =
+        p.whatsappText ||
+        `Olá! 👋 Vi no vosso site a ideia "${p.name}" e queria saber opções e valores.`;
       btn.href = waLink(msg);
-      btn.textContent = "Quero este / orçamento";
+      btn.textContent = "Quero personalizar este";
+      applyWhatsAppTarget(btn);
 
       body.append(title, desc, btn);
       card.append(media, body);
@@ -166,15 +195,27 @@
     });
   }
 
-  function hookGeneralButtons(){
+  function hookGeneralButtons() {
     const btnGeral = $("#btnWhatsAppGeral");
     const btnCustom = $("#btnWhatsAppCustom");
-    if (btnGeral) btnGeral.href = waLink("Olá! 👋 Quero um orçamento/ajuda para um personalizado. Podem ajudar?");
-    if (btnCustom) btnCustom.href = waLink("Olá! 👋 Tenho uma ideia à medida e queria falar convosco sobre opções e valores.");
+
+    if (btnGeral) {
+      btnGeral.href = waLink(
+        "Olá! 👋 Quero ajuda/orçamento para um personalizado."
+      );
+      applyWhatsAppTarget(btnGeral);
+    }
+
+    if (btnCustom) {
+      btnCustom.href = waLink(
+        "Olá! 👋 Tenho uma ideia à medida e queria falar convosco sobre opções e valores."
+      );
+      applyWhatsAppTarget(btnCustom);
+    }
   }
 
-  function hookEvents(){
-    chipsWrap.addEventListener("click", (e) => {
+  function hookEvents() {
+    chipsWrap.addEventListener("click", e => {
       const b = e.target.closest("button.chip");
       if (!b) return;
       const id = b.dataset.id || "";
@@ -188,11 +229,11 @@
       renderProducts();
     });
 
-    search.addEventListener("input", () => renderProducts());
-    onlyActive.addEventListener("change", () => renderProducts());
+    search.addEventListener("input", renderProducts);
+    onlyActive.addEventListener("change", renderProducts);
   }
 
-  async function init(){
+  async function init() {
     $("#year").textContent = String(new Date().getFullYear());
 
     hookGeneralButtons();
@@ -201,11 +242,12 @@
     sections = await loadJson("data/sections.json");
     products = await loadJson("data/products.json");
 
-    const activeSections = sections.filter(s => s.active);
-    statSections.textContent = String(activeSections.length);
-
-    const activeProducts = products.filter(p => p.active);
-    statProducts.textContent = String(activeProducts.length);
+    statSections.textContent = String(
+      sections.filter(s => s.active).length
+    );
+    statProducts.textContent = String(
+      products.filter(p => p.active).length
+    );
 
     fillFilter();
     buildChips("");
@@ -215,6 +257,8 @@
 
   init().catch(err => {
     console.error(err);
-    alert("Erro a carregar dados. Confirma se os ficheiros /data existem e se estás a abrir via GitHub Pages (não por ficheiro local).");
+    alert(
+      "Erro a carregar dados. Confirma se estás a abrir via GitHub Pages e se as pastas estão corretas."
+    );
   });
 })();
