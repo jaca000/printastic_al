@@ -1,0 +1,18 @@
+[
+  {
+    "id": "dia-dos-namorados",
+    "title": "Dia dos Namorados",
+    "description": "Presentes personalizados para quem amas (sem coisas genéricas).",
+    "heroImage": "img/produtos/placeholder-namorados.jpg",
+    "active": true,
+    "order": 1
+  },
+  {
+    "id": "dia-do-pai",
+    "title": "Dia do Pai",
+    "description": "Ideias com significado — feitas à medida, como deve ser.",
+    "heroImage": "img/produtos/placeholder-pai.jpg",
+    "active": true,
+    "order": 2
+  }
+]
