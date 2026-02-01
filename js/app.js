@@ -15,9 +15,10 @@
     return `https://wa.me/${WA}?text=${msg}`;
   }
 
-  function applyWhatsAppTarget(a) {
-    a.target = "_blank";
-    a.rel = "noopener noreferrer";
+  // 🔥 FORÇA abertura fora da página (solução definitiva)
+  function openWhatsApp(text) {
+    const url = waLink(text);
+    window.open(url, "_blank", "noopener,noreferrer");
   }
 
   async function loadJson(path) {
@@ -105,21 +106,22 @@
 
       const actions = el("div", "campaign-actions");
 
-      const btnIdeas = el("a", "btn primary");
-      btnIdeas.href = "#produtos";
+      const btnIdeas = el("button", "btn primary");
+      btnIdeas.type = "button";
       btnIdeas.textContent = "Ver ideias";
       btnIdeas.addEventListener("click", () => {
         campaignFilter.value = s.id;
         buildChips(s.id);
         renderProducts();
+        document.getElementById("produtos")?.scrollIntoView({ behavior: "smooth" });
       });
 
-      const btnWA = el("a", "btn");
-      btnWA.href = waLink(
-        `Olá! 👋 Vi a campanha "${s.title}" no vosso site e queria saber opções e valores.`
-      );
+      const btnWA = el("button", "btn");
+      btnWA.type = "button";
       btnWA.textContent = "Pedir orçamento";
-      applyWhatsAppTarget(btnWA);
+      btnWA.addEventListener("click", () => {
+        openWhatsApp(`Olá! 👋 Vi a campanha "${s.title}" no vosso site e queria saber opções e valores.`);
+      });
 
       actions.append(btnIdeas, btnWA);
       body.append(title, desc, actions);
@@ -181,13 +183,15 @@
       const desc = el("p", "card-desc");
       desc.textContent = p.description || "";
 
-      const btn = el("a", "btn primary");
-      const msg =
-        p.whatsappText ||
-        `Olá! 👋 Vi no vosso site a ideia "${p.name}" e queria saber opções e valores.`;
-      btn.href = waLink(msg);
+      const btn = el("button", "btn primary");
+      btn.type = "button";
       btn.textContent = "Quero personalizar este";
-      applyWhatsAppTarget(btn);
+      btn.addEventListener("click", () => {
+        const msg =
+          p.whatsappText ||
+          `Olá! 👋 Vi no vosso site a ideia "${p.name}" e queria saber opções e valores.`;
+        openWhatsApp(msg);
+      });
 
       body.append(title, desc, btn);
       card.append(media, body);
@@ -200,17 +204,15 @@
     const btnCustom = $("#btnWhatsAppCustom");
 
     if (btnGeral) {
-      btnGeral.href = waLink(
-        "Olá! 👋 Quero ajuda/orçamento para um personalizado."
-      );
-      applyWhatsAppTarget(btnGeral);
+      btnGeral.addEventListener("click", () => {
+        openWhatsApp("Olá! 👋 Quero ajuda/orçamento para um personalizado.");
+      });
     }
 
     if (btnCustom) {
-      btnCustom.href = waLink(
-        "Olá! 👋 Tenho uma ideia à medida e queria falar convosco sobre opções e valores."
-      );
-      applyWhatsAppTarget(btnCustom);
+      btnCustom.addEventListener("click", () => {
+        openWhatsApp("Olá! 👋 Tenho uma ideia à medida e queria falar convosco sobre opções e valores.");
+      });
     }
   }
 
