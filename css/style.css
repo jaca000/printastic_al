@@ -1,15 +1,20 @@
 :root{
-  --bg:#0b0f14;
-  --panel:#0f1723;
-  --panel2:#0d1420;
-  --text:#eaf1fb;
-  --muted:#a8b6c8;
-  --line:rgba(255,255,255,.10);
-  --soft:rgba(255,255,255,.06);
-  --accent:#7cf2c1;
-  --accent2:#78b7ff;
-  --shadow: 0 12px 38px rgba(0,0,0,.35);
-  --r:16px;
+  /* Base */
+  --bg: #f6f5f2;            /* fundo quente, não branco */
+  --panel: #ffffff;        /* cartões */
+  --panel2: #f0efe9;       /* variações suaves */
+  --text: #2b2b2b;         /* texto principal */
+  --muted: #6f6f6f;        /* texto secundário */
+
+  /* Linhas e sombras */
+  --line: rgba(0,0,0,0.08);
+  --soft: rgba(0,0,0,0.04);
+  --shadow: 0 12px 28px rgba(0,0,0,0.08);
+
+  /* Acentos (inspirados em criatividade, não tech) */
+  --accent: #ff6f61;       /* coral quente (chama atenção) */
+  --accent2: #7c9cff;      /* azul suave criativo */
+  --accent3: #7dd3a8;      /* verde menta */
 }
 
 *{box-sizing:border-box}
