@@ -261,3 +261,7 @@ select,input[type="search"]{
 .footer-inner{display:flex; justify-content:space-between; gap:12px; flex-wrap:wrap}
 .footlinks{display:flex; gap:14px; color:var(--muted)}
 .footlinks a:hover{color:var(--text)}
+*{
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
