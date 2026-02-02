@@ -52,8 +52,9 @@ a{color:inherit; text-decoration:none}
 }
 .topbar-inner{display:flex; gap:16px; align-items:center; padding:14px 0}
 .brand-logo{
-  height:48px;          /* ajusta se quiseres */
-  width:auto;
+  height:48px !important;
+  width:auto !important;
+  max-height:none !important;
   display:block;
 }
 .mark{
