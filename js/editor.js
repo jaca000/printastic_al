@@ -1,93 +1,140 @@
-import { auth, db } from "./firebase.js";
+(() => {
 
-import {
-  signInWithEmailAndPassword,
-  onAuthStateChanged
-} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
-
-import {
-  collection,
-  getDocs,
-  setDoc,
-  doc
-} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
-
-const authBox = document.getElementById("authBox");
-const editorApp = document.getElementById("editorApp");
-const loginBtn = document.getElementById("loginBtn");
-const saveBtn = document.getElementById("saveBtn");
+const $ = (sel) => document.querySelector(sel);
 
 let sections = [];
 let products = [];
 
-/* LOGIN */
+const sectionsList = $("#sectionsList");
+const productsList = $("#productsList");
 
-loginBtn.onclick = async () => {
+const btnAddSection = $("#btnAddSection");
+const btnAddProduct = $("#btnAddProduct");
+const btnSave = $("#saveBtn");
 
-  const email = document.getElementById("email").value;
-  const password = document.getElementById("password").value;
-
-  try {
-    await signInWithEmailAndPassword(auth, email, password);
-  } catch (err) {
-    alert("Erro login: " + err.message);
-  }
-
-};
-
-/* AUTH STATE */
-
-onAuthStateChanged(auth, async (user) => {
-
-  if (user) {
-
-    authBox.style.display = "none";
-    editorApp.style.display = "block";
-
-    await loadData();
-    renderEditor();
-
-  } else {
-
-    authBox.style.display = "block";
-    editorApp.style.display = "none";
-
-  }
-
-});
-
-/* LOAD FIRESTORE */
+/* ================= LOAD DATA ================= */
 
 async function loadData(){
 
-  const secSnap = await getDocs(collection(db,"sections"));
-  const prodSnap = await getDocs(collection(db,"products"));
+  const s = await fetch("../data/sections.json");
+  const p = await fetch("../data/products.json");
 
-  sections = secSnap.docs.map(d => d.data());
-  products = prodSnap.docs.map(d => d.data());
+  sections = await s.json();
+  products = await p.json();
+
+  render();
 
 }
 
-/* SAVE */
+/* ================= SAVE JSON ================= */
 
-saveBtn.onclick = async () => {
+function download(filename, data){
 
-  for(const s of sections){
-    await setDoc(doc(db,"sections",s.id), s);
-  }
+  const blob = new Blob([JSON.stringify(data,null,2)], {type:"application/json"});
+  const url = URL.createObjectURL(blob);
 
-  for(const p of products){
-    await setDoc(doc(db,"products",p.id), p);
-  }
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = filename;
+  a.click();
 
-  alert("Guardado 🔥");
+  URL.revokeObjectURL(url);
+
+}
+
+btnSave.onclick = () => {
+
+  download("sections.json", sections);
+  download("products.json", products);
+
+  alert("Ficheiros exportados. Faz upload para /data no GitHub.");
 
 };
 
-/* RENDER SIMPLES (só teste inicial) */
+/* ================= ADD ================= */
 
-function renderEditor(){
+btnAddSection.onclick = () => {
 
-  console.log("Dados carregados:", sections, products);
+  sections.push({
+    id:"nova-campanha",
+    title:"Nova campanha",
+    description:"",
+    heroImage:"",
+    active:true,
+    order:sections.length+1
+  });
+
+  render();
+
+};
+
+btnAddProduct.onclick = () => {
+
+  products.push({
+    id:"novo-produto",
+    name:"Nova ideia",
+    sections:[],
+    image:"",
+    description:"",
+    active:true,
+    whatsappText:""
+  });
+
+  render();
+
+};
+
+/* ================= RENDER ================= */
+
+function render(){
+
+  sectionsList.innerHTML = "";
+  productsList.innerHTML = "";
+
+  sections.forEach((s,i)=>{
+
+    const div = document.createElement("div");
+    div.className="item";
+
+    div.innerHTML=`
+      <h3>${s.title}</h3>
+      <label>Título<input value="${s.title}"></label>
+      <label>Descrição<input value="${s.description}"></label>
+    `;
+
+    const inputs = div.querySelectorAll("input");
+
+    inputs[0].oninput = e => s.title = e.target.value;
+    inputs[1].oninput = e => s.description = e.target.value;
+
+    sectionsList.appendChild(div);
+
+  });
+
+  products.forEach((p,i)=>{
+
+    const div = document.createElement("div");
+    div.className="item";
+
+    div.innerHTML=`
+      <h3>${p.name}</h3>
+      <label>Nome<input value="${p.name}"></label>
+      <label>Descrição<input value="${p.description}"></label>
+    `;
+
+    const inputs = div.querySelectorAll("input");
+
+    inputs[0].oninput = e => p.name = e.target.value;
+    inputs[1].oninput = e => p.description = e.target.value;
+
+    productsList.appendChild(div);
+
+  });
 
 }
+
+/* ================= INIT ================= */
+
+loadData();
+
+})();
