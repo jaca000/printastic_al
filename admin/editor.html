@@ -75,27 +75,20 @@
 </header>
 
 <!-- LOGIN -->
-<div id="authBox" class="auth-wrapper panel">
-  <h2 style="margin:0 0 10px">Login do Editor</h2>
+<div id="loginBox" class="auth-wrapper panel">
+  <h2 style="margin:0 0 10px">Editor privado</h2>
 
-  <div class="fields">
-    <label>
-      Email
-      <input type="email" id="email" />
-    </label>
-
-    <label>
-      Password
-      <input type="password" id="password" />
-    </label>
-  </div>
+  <label>
+    Password
+    <input type="password" id="pw" />
+  </label>
 
   <div class="actions">
-    <button class="btn primary" id="loginBtn">Entrar</button>
+    <button class="btn primary" id="btnLogin">Entrar</button>
   </div>
 
   <div class="mini" style="margin-top:8px">
-    Apenas utilizadores autorizados podem editar conteúdos.
+    Acesso apenas para gestão interna.
   </div>
 </div>
 
@@ -165,6 +158,23 @@
 </script>
 
 <!-- MUITO IMPORTANTE: MODULE -->
+  <script>
+const EDITOR_PASSWORD = "printastic"; // muda aqui se quiseres
+
+document.getElementById("btnLogin").onclick = () => {
+
+  const pw = document.getElementById("pw").value;
+
+  if(pw !== EDITOR_PASSWORD){
+    alert("Password errada");
+    return;
+  }
+
+  document.getElementById("loginBox").style.display = "none";
+  document.getElementById("editorApp").style.display = "block";
+
+};
+</script>
 <script type="module" src="../js/editor.js"></script>
 
 </body>
