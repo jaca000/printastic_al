@@ -158,22 +158,30 @@
 </script>
 
 <!-- MUITO IMPORTANTE: MODULE -->
-  <script>
-const EDITOR_PASSWORD = "Jaca229788220"; // muda aqui se quiseres
+ <script>
 
-document.getElementById("btnLogin").onclick = () => {
+const EDITOR_PASSWORD = "Jaca229788220";
 
-  const pw = document.getElementById("pw").value;
+window.addEventListener("DOMContentLoaded", () => {
 
-  if(pw !== EDITOR_PASSWORD){
-    alert("Password errada");
-    return;
-  }
+  const btn = document.getElementById("btnLogin");
 
-  document.getElementById("loginBox").style.display = "none";
-  document.getElementById("editorApp").style.display = "block";
+  btn.addEventListener("click", () => {
 
-};
+    const pw = document.getElementById("pw").value;
+
+    if(pw !== EDITOR_PASSWORD){
+      alert("Password errada");
+      return;
+    }
+
+    document.getElementById("loginBox").style.display = "none";
+    document.getElementById("editorApp").style.display = "block";
+
+  });
+
+});
+
 </script>
 <script type="module" src="../js/editor.js"></script>
 
