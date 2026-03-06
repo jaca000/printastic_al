@@ -97,27 +97,29 @@ function render(){
     div.className="item";
 
     div.innerHTML=`
-      <h3>${s.title}</h3>
+  <h3>${s.title}</h3>
 
-      <label>
-        Título
-        <input value="${s.title}">
-      </label>
+  <label>
+    Título
+    <input value="${s.title}">
+  </label>
 
-      <label>
-        Descrição
-        <input value="${s.description}">
-      </label>
+  <label>
+    Descrição
+    <input value="${s.description}">
+  </label>
 
-      <label>
-        Imagem
-        <input value="${s.heroImage || ""}" placeholder="img/produtos/imagem.jpg">
-      </label>
+  <label>
+    Imagem
+    <input value="${s.heroImage || ""}" placeholder="img/produtos/imagem.jpg">
+  </label>
 
-      <button class="btn" style="margin-top:10px;background:#b33">
-        Apagar campanha
-      </button>
-    `;
+  <img class="preview" src="${s.heroImage || ""}" style="max-width:100%;border-radius:8px;margin-top:8px">
+
+  <button class="btn" style="margin-top:10px;background:#b33">
+    Apagar campanha
+  </button>
+`;
 
     const inputs = div.querySelectorAll("input");
 
