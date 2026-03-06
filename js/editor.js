@@ -118,7 +118,20 @@ function render(){
     Apagar campanha
   </button>
 `;
+const inputs = div.querySelectorAll("input");
 
+inputs[0].oninput = e => s.title = e.target.value;
+inputs[1].oninput = e => s.description = e.target.value;
+inputs[2].oninput = e => s.heroImage = e.target.value;
+
+div.querySelector("button").onclick = () => {
+
+  if(!confirm("Apagar campanha?")) return;
+
+  sections.splice(i,1);
+  render();
+
+};
     const inputs = div.querySelectorAll("input");
 
     inputs[0].oninput = e => s.title = e.target.value;
