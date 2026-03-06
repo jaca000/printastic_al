@@ -12,7 +12,7 @@ const btnAddSection = $("#btnAddSection");
 const btnAddProduct = $("#btnAddProduct");
 const btnSave = $("#saveBtn");
 
-/* ================= LOAD DATA ================= */
+/* LOAD DATA */
 
 async function loadData(){
 
@@ -26,7 +26,7 @@ async function loadData(){
 
 }
 
-/* ================= SAVE JSON ================= */
+/* SAVE JSON */
 
 function download(filename, data){
 
@@ -51,7 +51,7 @@ btnSave.onclick = () => {
 
 };
 
-/* ================= ADD ================= */
+/* ADD */
 
 btnAddSection.onclick = () => {
 
@@ -84,7 +84,7 @@ btnAddProduct.onclick = () => {
 
 };
 
-/* ================= RENDER ================= */
+/* RENDER */
 
 function render(){
 
@@ -97,45 +97,42 @@ function render(){
     div.className="item";
 
     div.innerHTML=`
-  <h3>${s.title}</h3>
+      <h3>${s.title}</h3>
 
-  <label>
-    Título
-    <input value="${s.title}">
-  </label>
+      <label>
+        Título
+        <input value="${s.title}">
+      </label>
 
-  <label>
-    Descrição
-    <input value="${s.description}">
-  </label>
+      <label>
+        Descrição
+        <input value="${s.description}">
+      </label>
 
-  <label>
-    Imagem
-    <input value="${s.heroImage || ""}" placeholder="img/produtos/imagem.jpg">
-  </label>
+      <label>
+        Imagem
+        <input value="${s.heroImage || ""}" placeholder="img/produtos/imagem.jpg">
+      </label>
 
-  <button class="btn" style="margin-top:10px;background:#b33">
-    Apagar campanha
-  </button>
-`;
-const inputs = div.querySelectorAll("input");
+      <button class="btn" style="margin-top:10px;background:#b33">
+        Apagar campanha
+      </button>
+    `;
 
-inputs[0].oninput = e => s.title = e.target.value;
-inputs[1].oninput = e => s.description = e.target.value;
-inputs[2].oninput = e => s.heroImage = e.target.value;
-
-div.querySelector("button").onclick = () => {
-
-  if(!confirm("Apagar campanha?")) return;
-
-  sections.splice(i,1);
-  render();
-
-};
     const inputs = div.querySelectorAll("input");
 
     inputs[0].oninput = e => s.title = e.target.value;
     inputs[1].oninput = e => s.description = e.target.value;
+    inputs[2].oninput = e => s.heroImage = e.target.value;
+
+    div.querySelector("button").onclick = () => {
+
+      if(!confirm("Apagar campanha?")) return;
+
+      sections.splice(i,1);
+      render();
+
+    };
 
     sectionsList.appendChild(div);
 
@@ -147,45 +144,42 @@ div.querySelector("button").onclick = () => {
     div.className="item";
 
     div.innerHTML=`
-  <h3>${p.name}</h3>
+      <h3>${p.name}</h3>
 
-  <label>
-    Nome
-    <input value="${p.name}">
-  </label>
+      <label>
+        Nome
+        <input value="${p.name}">
+      </label>
 
-  <label>
-    Descrição
-    <input value="${p.description}">
-  </label>
+      <label>
+        Descrição
+        <input value="${p.description}">
+      </label>
 
-  <label>
-    Imagem
-    <input value="${p.image || ""}" placeholder="img/produtos/produto.jpg">
-  </label>
+      <label>
+        Imagem
+        <input value="${p.image || ""}" placeholder="img/produtos/produto.jpg">
+      </label>
 
-  <button class="btn" style="margin-top:10px;background:#b33">
-    Apagar ideia
-  </button>
-`;
-const inputs = div.querySelectorAll("input");
+      <button class="btn" style="margin-top:10px;background:#b33">
+        Apagar ideia
+      </button>
+    `;
 
-inputs[0].oninput = e => p.name = e.target.value;
-inputs[1].oninput = e => p.description = e.target.value;
-inputs[2].oninput = e => p.image = e.target.value;
-
-div.querySelector("button").onclick = () => {
-
-  if(!confirm("Apagar ideia?")) return;
-
-  products.splice(i,1);
-  render();
-
-};
     const inputs = div.querySelectorAll("input");
 
     inputs[0].oninput = e => p.name = e.target.value;
     inputs[1].oninput = e => p.description = e.target.value;
+    inputs[2].oninput = e => p.image = e.target.value;
+
+    div.querySelector("button").onclick = () => {
+
+      if(!confirm("Apagar ideia?")) return;
+
+      products.splice(i,1);
+      render();
+
+    };
 
     productsList.appendChild(div);
 
@@ -193,7 +187,7 @@ div.querySelector("button").onclick = () => {
 
 }
 
-/* ================= INIT ================= */
+/* INIT */
 
 loadData();
 
