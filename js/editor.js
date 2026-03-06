@@ -147,11 +147,41 @@ div.querySelector("button").onclick = () => {
     div.className="item";
 
     div.innerHTML=`
-      <h3>${p.name}</h3>
-      <label>Nome<input value="${p.name}"></label>
-      <label>Descrição<input value="${p.description}"></label>
-    `;
+  <h3>${p.name}</h3>
 
+  <label>
+    Nome
+    <input value="${p.name}">
+  </label>
+
+  <label>
+    Descrição
+    <input value="${p.description}">
+  </label>
+
+  <label>
+    Imagem
+    <input value="${p.image || ""}" placeholder="img/produtos/produto.jpg">
+  </label>
+
+  <button class="btn" style="margin-top:10px;background:#b33">
+    Apagar ideia
+  </button>
+`;
+const inputs = div.querySelectorAll("input");
+
+inputs[0].oninput = e => p.name = e.target.value;
+inputs[1].oninput = e => p.description = e.target.value;
+inputs[2].oninput = e => p.image = e.target.value;
+
+div.querySelector("button").onclick = () => {
+
+  if(!confirm("Apagar ideia?")) return;
+
+  products.splice(i,1);
+  render();
+
+};
     const inputs = div.querySelectorAll("input");
 
     inputs[0].oninput = e => p.name = e.target.value;
